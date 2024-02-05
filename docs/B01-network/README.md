@@ -1,18 +1,28 @@
 # Network Issue
 
-Many large organisations require all machines in their network to use a corporate proxy for all access to the internet. Often these proxies force a terrible user experience on anyone who isn’t using a Microsoft web browser on Windows platform using centralised authentication. There are some tools that can help make life less terrible for developers in such situations.
+#howto, #firewall, #network, #enterprise, #local, #http, #proxy, #configuration.
 
-Authenticating proxy requests
-Many corporate proxies require client authentication (so they can monitor your Facebook or whatever). Entering your password every time some new process makes a request is awful but it’s also moderately easy to solve this problem: install a local proxy configured to add authentication details and forward all requests to the official proxy.
 
-SquidMan and cntlm are both quick and easy ways to get a local proxy server up and running. SquidMan is a GUI app that configures and runs a squid proxy for you while cntlm is a cut down proxy server designed to forward requests with NTLM authentication to an upstream proxy.
+## Surviing in an Air-gapped Network
 
-## Proxy
+Many large organisations require all machines in their network to use a corporate proxy for all access to the internet.
+Often these proxies force a terrible user experience on anyone who isn’t using a Microsoft web browser on Windows platform using centralised authentication.
+There are some tools that can help make life less terrible for developers in such situations.
 
-Proxy settings for the shell
-Configuring your local proxy in System Preferences.app will get almost all native Mac apps to use it but what about command line applications? Here’s a small script which will interrogate your system preferences and translate them into environment variables for command line applications.
+### Authenticating proxy requests
 
-```shell
+Many corporate proxies require client authentication (so they can monitor your Facebook or whatever).
+Entering your password every time some new process makes a request is awful but it’s also moderately easy to solve this problem: install a local proxy configured to add authentication details and forward all requests to the official proxy.
+
+SquidMan and cntlm are both quick and easy ways to get a local proxy server up and running.
+SquidMan is a GUI app that configures and runs a squid proxy for you while cntlm is a cut down proxy server designed to forward requests with NTLM authentication to an upstream proxy.
+
+### Proxy settings for the shell
+
+Configuring your local proxy in System Preferences.app will get almost all native Mac apps to use it but what about command line applications?
+Here’s a small script which will interrogate your system preferences and translate them into environment variables for command line applications.
+
+```bash
 #!/usr/bin/env bash
 
 proxy () {
@@ -36,14 +46,18 @@ ftp=$(proxy FTP)
 
 You can run it from your .bashrc file like so (assuming it’s installed in your ~/bin directory):
 
-```shell
+```bash
 eval $($HOME/bin/proxy)
 ```
 
-If you use some other shell than bash you should be able to figure out how to modify this yourself. You might also like to modify it to export the capitalised variables (HTTP_PROXY, etc.) and make the values a full URI (http://${host}:${port}) as appropriate.
+If you use some other shell than bash you should be able to figure out how to modify this yourself.
+You might also like to modify it to export the capitalised variables (HTTP_PROXY, etc.) and make the values a full URI (http://${host}:${port}) as appropriate.
 
-Docker
-If you use Docker for Mac in the default configuration, it should be able to pull images via the proxy configured in System Preferences.app. Getting processes inside containers to use the proxy needs some additional configuration. If you run a local proxy as described above (listening on port 2138) then you can get Docker to define the appropriate environment variables (as least for docker build and docker run) by editing $HOME/.docker/config.json:
+### Docker
+If you use Docker for Mac in the default configuration, it should be able to pull images via the proxy configured in System Preferences.app.
+Getting processes inside containers to use the proxy needs some additional configuration.
+
+If you run a local proxy as described above (listening on port 2138) then you can get Docker to define the appropriate environment variables (as least for docker build and docker run) by editing $HOME/.docker/config.json:
 
 ```json
 {
@@ -60,21 +74,30 @@ If you use Docker for Mac in the default configuration, it should be able to pul
 }
 ```
 
-Incidentally host.docker.internal is a magical hostname provided by Docker (or maybe just Docker for Mac? Who knows!) that resolves to your host.
+Incidentally `host.docker.internal`` is a magical hostname provided by Docker (or maybe just Docker for Mac? Who knows!) that resolves to your host.
 
-SSH
-Sometimes you just want an SSH connection but all outgoing connections are blocked unless they go via the proxy. You can use tools like corkscrew to tunnel SSH (and most other TCP protocols) through a proxy.
+### SSH
+Sometimes you just want an SSH connection but all outgoing connections are blocked unless they go via the proxy.
+You can use tools like corkscrew to tunnel SSH (and most other TCP protocols) through a proxy.
 
-With the ProxyCommand directive in your .ssh/config OpenSSH can use some other command to manage the shipping the bytes back and forth to the server. A command like corkscrew can do this shipping via your proxy server:
+With the ProxyCommand directive in your `.ssh/config` OpenSSH can use some other command to manage the shipping the bytes back and forth to the server.
+A command like corkscrew can do this shipping via your proxy server:
 
+```txt
 Host eg1
     Hostname host1.example.com
     ProxyCommand corkscrew $HTTP_PROXY $PROXY_PORT %h %p
-Now ssh eg1 will invoke corkscrew which will CONNECT through the proxy. Some particularly obnoxious proxies will be configured to block this, YMMV.
+```
 
-What about those crazy access rules
-Complex environments will often have ludicrous rules requiring you access some internal services directly, using a special purpose proxy for third-party service A, and so on. These requirements are usually implemented using perhaps the world’s stupidest use of JavaScript: Proxy Automatic Configuration scripts.
+Now ssh eg1 will invoke corkscrew which will CONNECT through the proxy.
+Some particularly obnoxious proxies will be configured to block this, YMMV.
 
-Alas, there’s not much you can do about these. On current versions of OS X configuring a PAC and HTTP and HTTPS proxies will not do anything useful: it just ignores the HTTP and HTTPS proxy settings and always uses the PAC. The best alternative I’ve found is to use a browser extension like Proxy SwitchyOmega to control which requests use the PAC and which use your local proxy server. Generally you’ll only actually want to use the policy in the PAC from your web browser anyway.
+### What about those crazy access rules
 
-This post was published on May 2, 2018 and last modified on September 4, 2020. It is tagged with: howto, osx, enterprise, local, http, proxy, configuration.
+Complex environments will often have ludicrous rules requiring you access some internal services directly, using a special purpose proxy for third-party service A, and so on.
+These requirements are usually implemented using perhaps the world’s stupidest use of JavaScript: Proxy Automatic Configuration scripts.
+
+Alas, there’s not much you can do about these.
+On current versions of OS X configuring a PAC and HTTP and HTTPS proxies will not do anything useful: it just ignores the HTTP and HTTPS proxy settings and always uses the PAC.
+The best alternative I’ve found is to use a browser extension like `Proxy SwitchyOmega` to control which requests use the PAC and which use your local proxy server.
+Generally you’ll only actually want to use the policy in the PAC from your web browser anyway.
