@@ -8,18 +8,31 @@
   <meta name="description" content="Description">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
 
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify@4/lib/themes/vue.css">
+  <link rel="stylesheet" media="(prefers-color-scheme: light)" href="//cdn.jsdelivr.net/npm/docsify-themeable@0/dist/css/theme-simple.css">
+  <link rel="stylesheet" media="(prefers-color-scheme: dark)"  href="//cdn.jsdelivr.net/npm/docsify-themeable@0/dist/css/theme-simple-dark.css">
+  
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk/dist/gitalk.css">
 </head>
 
-
 <body>
   <div id="app"></div>
+
+  <!-- Docsify v4 -->
+  <script src="//cdn.jsdelivr.net/npm/docsify@4/lib/docsify.min.js" data-ga="G-WPSFD68VYD"></script>
+  <!-- docsify-themeable -->
+  <script src="//cdn.jsdelivr.net/npm/docsify-themeable@0/dist/js/docsify-themeable.min.js"></script>
+
+  <style>
+    :root {--theme-hue: 325;}
+  </style>
+
+  <script src="//cdn.jsdelivr.net/npm/docsify-edit-on-github"></script>
 
   <script>
     window.$docsify = {
       name: 'FYI - 🛠iToolBox',
       repo: 'https://github.com/QPod0/fyi',
+
       
       // Sidebar Configuration
       auto2top: true,
@@ -38,24 +51,29 @@
         color:'rgb(90,90,90)',
         language:'chinese'
       },
+      themeable: {
+          readyTransition : true, // default
+          responsiveTables: true  // default
+      },
       alias: {
         '/.*/_sidebar.md': '/_sidebar.md'
       },
-      plugins: []
-    }
+      plugins: [
+        EditOnGithubPlugin.create('https://github.com/qpod0/fyi/tree/main/docs/')
+      ]
+    };
   </script>
-  <!-- Docsify v4 -->
-  <script src="//cdn.jsdelivr.net/npm/docsify/lib/docsify.min.js" data-ga="G-WPSFD68VYD"></script>
+
   <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/search.js"></script>
   <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/zoom-image.min.js"></script>
-  
+
   <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/gitalk.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.js"></script>
   
   <script src="//unpkg.com/docsify-count/dist/countable.js"></script>
-  
-  <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/ga.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/docsify-copy-code/dist/docsify-copy-code.min.js"></script>
 
+  <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/ga.min.js"></script>
   <script>
     const gitalk = new Gitalk({
       clientID: '5c57f2c6310135830e66',
@@ -66,6 +84,9 @@
       distractionFreeMode: true  // facebook-like distraction free mode
     })
   </script>
-  
+
+  <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-bash.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-json.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-python.min.js"></script>
 </body>
 </html>
