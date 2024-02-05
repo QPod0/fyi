@@ -9,6 +9,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
 
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify@4/lib/themes/vue.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk/dist/gitalk.css">
 </head>
 
 
@@ -31,7 +32,12 @@
         noData: 'No matches found.',
         depth: 6, // Headline depth, 1 - 6
       },
-
+      count:{
+        countable:true,
+        fontsize:'0.9em',
+        color:'rgb(90,90,90)',
+        language:'chinese'
+      },
       alias: {
         '/.*/_sidebar.md': '/_sidebar.md'
       },
@@ -39,9 +45,27 @@
     }
   </script>
   <!-- Docsify v4 -->
-  <script src="//cdn.jsdelivr.net/npm/docsify/lib/docsify.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/docsify/lib/docsify.min.js" data-ga="G-WPSFD68VYD"></script>
   <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/search.js"></script>
   <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/zoom-image.min.js"></script>
+  
+  <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/gitalk.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.js"></script>
+  
+  <script src="//unpkg.com/docsify-count/dist/countable.js"></script>
+  
+  <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/ga.min.js"></script>
+
+  <script>
+    const gitalk = new Gitalk({
+      clientID: '5c57f2c6310135830e66',
+      clientSecret: '116f4c3cf7ded21b6f7ea11d2ebd59a92b84d1ff',
+      repo: 'fyi',
+      owner: 'qpod0',
+      admin: ['qpod0'],
+      distractionFreeMode: true  // facebook-like distraction free mode
+    })
+  </script>
   
 </body>
 </html>
