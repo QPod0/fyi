@@ -1,3 +1,4 @@
+# Network Issue
 
 Many large organisations require all machines in their network to use a corporate proxy for all access to the internet. Often these proxies force a terrible user experience on anyone who isn’t using a Microsoft web browser on Windows platform using centralised authentication. There are some tools that can help make life less terrible for developers in such situations.
 
@@ -5,6 +6,8 @@ Authenticating proxy requests
 Many corporate proxies require client authentication (so they can monitor your Facebook or whatever). Entering your password every time some new process makes a request is awful but it’s also moderately easy to solve this problem: install a local proxy configured to add authentication details and forward all requests to the official proxy.
 
 SquidMan and cntlm are both quick and easy ways to get a local proxy server up and running. SquidMan is a GUI app that configures and runs a squid proxy for you while cntlm is a cut down proxy server designed to forward requests with NTLM authentication to an upstream proxy.
+
+## Proxy
 
 Proxy settings for the shell
 Configuring your local proxy in System Preferences.app will get almost all native Mac apps to use it but what about command line applications? Here’s a small script which will interrogate your system preferences and translate them into environment variables for command line applications.
