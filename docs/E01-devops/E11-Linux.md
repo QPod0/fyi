@@ -9,9 +9,10 @@ function create_user_with_id() {
     NUID=${1:-"5001"};
     USERNAME=${2:-"user"};
     PASSWORD=${3:-"password"};
-    echo "Creating user with uid=${NUID} with username=${USERNAME} and password=${PASSWORD}"
+    echo "Creating user with uid=${NUID} gid=${NUID} with username=${USERNAME} and password=${PASSWORD}"
 
-    useradd -u ${NUID} ${USERNAME} -s /bin/bash -m -d /home/${USERNAME} \
+      groupadd -g ${NUID} ${USERNAME} \
+    && useradd -u ${NUID} ${USERNAME} -g ${USERNAME} -s /bin/bash -m -d /home/${USERNAME} \
     && echo ${USERNAME}:${PASSWORD} | chpasswd \
     && usermod -aG root ${USERNAME}
 }

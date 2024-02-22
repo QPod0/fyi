@@ -1,9 +1,13 @@
 # Development Work
 
-## 开发工具
+## 开发工具 - 通用工具
 
 - VS Code 下载地址：https://code.visualstudio.com/Download
 - GitHub 桌面端：https://desktop.github.com/
+
+## 开发工具 - Terminal
+
+- [Tabby](https://tabby.sh/): https://github.com/Eugeny/tabby/releases/latest
 
 ## Python开发
 

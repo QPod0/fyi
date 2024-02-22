@@ -2,7 +2,6 @@
 
 #howto, #firewall, #network, #enterprise, #local, #http, #proxy, #configuration.
 
-
 ## Surviing in an Air-gapped Network
 
 Many large organisations require all machines in their network to use a corporate proxy for all access to the internet.
